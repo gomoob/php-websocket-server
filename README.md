@@ -40,7 +40,7 @@ $phpClient->send(WebSocketRequest::create($message, ['language' => 'FR']);
 
 Running a server requires only one line of code.
 
-```
+```php
 require __DIR__ . '/vendor/autoload.php';
 
 echo "WebSocket server started, enter Ctrl+C to stop server." . PHP_EOL;
@@ -77,20 +77,7 @@ $response = $phpClient->send(
 );
 ```
 
-# Build commands
-
-## Execute unit tests in development
-
-To quickly run unit tests in development its advised to first disable the XDebug extension (otherwise PHPUnit will 
-generate code coverage reports which is very slow). 
-
-Then simply run the following command. 
-
-```
-grunt test
-```
-
 # Release history
 
-## 0.1.0 (2016-08-XX)
+## 0.1.0 (2016-08-17)
  * First release.
