@@ -1,0 +1,6 @@
+.buildpath
+elasticsearch.log
+/vendor/
+/node_modules/
+/target/
+/scheduled_task_manager.lock

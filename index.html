@@ -1,0 +1,108 @@
+<html>
+	<head>
+		<style type="text/css">
+		    * {
+		        font-family: monospace;
+		    }
+		</style>
+	</head>
+	<body>
+	    <table>
+	        <tr>
+	            <td><label><b>WebSocket URL</b></label></td>
+	            <td>
+	                <input id="websocket-url" 
+	                       value="ws://localhost:10000?tags={&quot;tag1&quot;:&quot;tag1Value&quot;}" 
+	                       style="width: 100%; "/>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td></td>
+	            <td>
+	            	<button id="refresh-connection-btn">Refresh Connection</button>
+	            </td>
+	        </tr>
+	        <tr>
+	        	<td>
+	        	    <label><b>Server message</b></label>
+	        	</td>
+	            <td>
+	                <textarea id="server-message-textarea" cols="120" rows="10"></textarea>
+                </td>
+	        </tr>
+	        <tr>
+	        	<td></td>
+	        	<td>
+	        		<button id="send-server-message-btn">Send server message</button>
+	        	</td>
+	        </tr>
+	        <tr>
+	        	<td><label><b>Log</b></label>
+	        	<td>
+	        	    <textarea id="log-textarea" cols="120" rows="10"></textarea>
+	        	</td>
+	        </tr>
+	    </table>
+	    
+	</body>
+	<script type="text/javascript">
+		var logTextarea = document.getElementById('log-textarea'),
+		    refreshConnectionBtn = document.getElementById('refresh-connection-btn'),
+		    sendServerMessageBtn = document.getElementById('send-server-message-btn'),
+		    serverMessageTextarea = document.getElementById('server-message-textarea'), 
+		    websocketUrlInput = document.getElementById('websocket-url'),
+		    fnClose = function(closeEvent) {
+				logTextarea.value = '\nSOCKET CLOSE, PLEASE REFRESH CONNECTION !\n';
+			}, 
+			fnError = function(errorEvent) {
+				logTextarea.value = logTextarea.value + errorEvent.data + '\n';
+			}, 
+			fnMessage = function(messageEvent) {
+				logTextarea.value += '\nMESSAGE RECEIVED\n';
+				logTextarea.value = logTextarea.value + messageEvent.data + '\n';
+			},
+			fnOpen = function(openEvent) {
+			    logTextarea.value = logTextarea.value + 'New WebSocket connection established.\n';
+			};
+		
+		// Initial server message configuration
+		serverMessageTextarea.value = JSON.stringify(
+		    {
+		        token : "82C7QSqFryYuF2y587DCTZyE99Vy3rQRKrNgdU3CQ3ca37Wa8MvX2Xyuf6DTvQCS",
+		        message : {
+		            type : "MY_TYPE"
+		        },
+		        tags : {
+		            tag1 : "tag1Value"
+		        }
+		    },
+		    null,
+		    4
+		);
+
+		var webSocket = new WebSocket(websocketUrlInput.value);
+		webSocket.onclose = fnClose;
+		webSocket.onerror = fnError;
+		webSocket.onopen = fnOpen;
+		webSocket.onmessage = fnMessage;
+		
+		refreshConnectionBtn.addEventListener(
+		    'click',
+		    function(clickEvent) {
+		    	webSocket.close();
+		    	webSocket = new WebSocket(websocketUrlInput.value);
+		    	webSocket.onclose = fnClose;
+				webSocket.onerror = fnError;
+				webSocket.onopen = fnOpen;
+				webSocket.onmessage = fnMessage;
+		    }
+		);
+		
+		sendServerMessageBtn.addEventListener(
+		    'click', 
+		    function(clickEvent) {
+		    	webSocket.send(serverMessageTextarea.value);
+		    }
+		);
+	</script>
+</html>

@@ -1,0 +1,51 @@
+{
+	"name" : "gomoob/php-websocket-server",
+	"version" : "1.0.0",
+	"minimum-stability" : "stable",
+	"prefer-stable" : true,
+	"keywords" : [
+		"gomoob",
+		"ratchet",
+		"websocket"
+	],
+	"authors" : [{
+			"name" : "Baptiste Gaillard",
+			"email" : "baptiste.gaillard@gomoob.com"
+		}, {
+			"name" : "Simon Baudry",
+			"email" : "simon.baudry@gomoob.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Gomoob\\" : "src/main/php/Gomoob"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Gomoob\\" : "src/test/php/Gomoon"
+		}
+	},
+	"repositories" : [{
+			"type" : "composer",
+			"url" : "https://satis.gomoob.com"
+		}
+	],
+	"require" : {
+		"php" : ">=7.0",
+		"cboden/ratchet" : "^0.3.5",
+		"textalk/websocket" : "^1.2.0"
+	},
+	"require-dev" : {
+		"brianium/paratest" : "^0.14.0",
+		"pdepend/pdepend" : "^2.2.4",
+		"phpdocumentor/phpdocumentor" : "^2.9.0",
+		"phploc/phploc" : "^3.0.1",
+		"phpmd/phpmd" : "^2.4.3",
+		"phpunit/dbunit" : "^2.0.2",
+		"phpunit/php-code-coverage" : "^4.0.1",
+		"phpunit/phpunit" : "^5.5.0",
+		"sebastian/phpcpd" : "^2.0.4",
+		"squizlabs/php_codesniffer" : "^2.6.2"
+	}
+}
