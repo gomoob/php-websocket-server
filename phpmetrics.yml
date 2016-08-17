@@ -1,0 +1,14 @@
+# see https://github.com/phpmetrics/PhpMetrics/blob/master/.phpmetrics.yml.dist
+
+phpmetrics:
+  path:
+    directory: src/main/php
+  logging: 
+    report:
+      xml: ./target/phpmetrics/phpmetrics.xml
+      html: ./target/phpmetrics/phpmetrics.html
+      csv: ./target/phpmetrics/phpmetrics.csv
+    violations:
+      xml:  ./target/phpmetrics/violations.xml
+    chart:
+      bubbles: ./target/phpmetrics/bubbles.svg

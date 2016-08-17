@@ -14,6 +14,7 @@ use Gomoob\WebSocket\IWebSocketRequest;
 use Ratchet\ConnectionInterface;
 
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Authentication manager used to restrict accesses based on application parameters.
@@ -175,10 +176,10 @@ class ApplicationsAuthManager implements IAuthManager
             );
         }
             
-        $configurationFileContents = file_get_contents($configurationFile);
+        $fileContents = file_get_contents($configurationFile);
         
         // Failed to open the configuration file
-        if ($configurationFileContents === false) {
+        if ($fileContents === false) {
             throw new \InvalidArgumentException(
                 'Failed to open configuration file \'' . $configurationFile . '\' !'
             );
@@ -188,7 +189,7 @@ class ApplicationsAuthManager implements IAuthManager
         $this->configurationFile = $configurationFile;
 
         // Parse the YAML file
-        $this->parseYamlString($configurationFileContents);
+        $this->parseYamlString($fileContents);
     }
     
     /**
@@ -201,7 +202,9 @@ class ApplicationsAuthManager implements IAuthManager
     protected function parseYamlString($yamlString)
     {
         // Parse the YAML file
-        $configuration = Yaml::parse($yamlString);
+        $yamlParser = new Parser();
+
+        $configuration = $yamlParser->parse($yamlString);
         
         // The parsed configuration must be an array
         if (!is_array($configuration)) {
@@ -218,27 +221,28 @@ class ApplicationsAuthManager implements IAuthManager
         }
         
         // Read each application configuration
-        $i = 1;
+        $index = 1;
         
         foreach ($configuration['applications'] as $application) {
             // The 'key' property must exist
             if (!array_key_exists('key', $application)) {
                 throw new \InvalidArgumentException(
-                    'No \'key\' property found in application \'' . $i . '\' declared in the configuration file !'
+                    'No \'key\' property found in application \'' . $index . '\' declared in the configuration file !'
                 );
             }
             
             // The 'secret' property must exist
             if (!array_key_exists('secret', $application)) {
                 throw new \InvalidArgumentException(
-                    'No \'secret\' property found in application \'' . $i . '\' declared in the configuration file !'
+                    'No \'secret\' property found in application \'' . $index .
+                    '\' declared in the configuration file !'
                 );
             }
             
             // The 'authorizeOpen' propety must exist
             if (!array_key_exists('authorizeOpen', $application)) {
                 throw new \InvalidArgumentException(
-                    'No \'authorizeOpen\' property found in application \'' . $i .
+                    'No \'authorizeOpen\' property found in application \'' . $index .
                     '\' declared in the configuration file !'
                 );
             }

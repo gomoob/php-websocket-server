@@ -1,10 +1,17 @@
-exclude_paths:
-  - "Gruntfile.js"
 engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
   phpcodesniffer:
     enabled: true
   phpmd:
     enabled: true
-  ratings:
-    paths:
-      - "src/**.php"
+ratings:
+  paths:
+  - "**.php"
+exclude_paths:
+  - "Gruntfile.js"

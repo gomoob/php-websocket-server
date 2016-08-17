@@ -72,10 +72,10 @@ class RatchetApplication implements MessageComponentInterface
         }
 
         // Initialize the logger
+        $this->logger = new Logger('WebSocketServer');
+
         if (array_key_exists('logger', $options)) {
             $this->logger = $options['logger'];
-        } else {
-            $this->logger = new Logger('WebSocketServer');
         }
         
         // Initialize the message parser

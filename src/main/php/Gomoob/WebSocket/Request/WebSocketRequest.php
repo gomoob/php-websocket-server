@@ -226,12 +226,10 @@ class WebSocketRequest implements IWebSocketRequest
      */
     public function jsonSerialize()
     {
-        $data = [];
+        $data = ['message' => $this->message];
         
         if ($this->message instanceof \JsonSerializable) {
             $data['message'] = $this->message->jsonSerialize();
-        } else {
-            $data['message'] = $this->message;
         }
 
         $data['tags'] = $this->tags;

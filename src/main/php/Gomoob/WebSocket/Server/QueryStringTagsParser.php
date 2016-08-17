@@ -40,19 +40,18 @@ class QueryStringTagsParser
             } // The 'tags' URL parameter must be a JSON array
             elseif (!is_array($tagsJson)) {
                 throw new \InvalidArgumentException('The \'tags\' URL parameter is not a JSON array !');
-            } // Otherwise the 'tags' URL parameter is a JSON array
-            else {
-                // Parse each tag
-                foreach ($tagsJson as $tagName => $tagValue) {
-                    // Each tag value must be an integer or a string, all other types are forbidden
-                    if (!(is_int($tagValue) || is_string($tagValue))) {
-                        throw new \InvalidArgumentException(
-                            'The \'' . $tagName . '\' tag is not an integer or a string !'
-                        );
-                    }
-                    
-                    $tags[$tagName] = $tagValue;
+            }
+            
+            // Otherwise the 'tags' URL parameter is a JSON array, parse each tag
+            foreach ($tagsJson as $tagName => $tagValue) {
+                // Each tag value must be an integer or a string, all other types are forbidden
+                if (!(is_int($tagValue) || is_string($tagValue))) {
+                    throw new \InvalidArgumentException(
+                        'The \'' . $tagName . '\' tag is not an integer or a string !'
+                    );
                 }
+                    
+                $tags[$tagName] = $tagValue;
             }
         }
         

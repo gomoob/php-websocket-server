@@ -265,7 +265,7 @@ module.exports = function(grunt) {
             'phpcs', 
             'pdepend',
             'phpmd',
-            'phploc',
+            'shell:phploc',
             'shell:phpcpd',
             'shell:phpmetrics',
             'shell:phpdocumentor' 

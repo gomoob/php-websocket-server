@@ -23,9 +23,9 @@ class WebSocketClient implements IWebSocketClient
     /**
      * The Textalk WebSocket client used to send messages.
      *
-     * @var \WebSocket\Client
+     * @SuppressWarnings(PHPMD)
      */
-    protected $textalkWebSocketClient;
+    protected $client;
 
     /**
      * Creates a new instance of the Gomoob Web Socket client.
@@ -34,7 +34,7 @@ class WebSocketClient implements IWebSocketClient
      */
     public function __construct($uri)
     {
-        $this->textalkWebSocketClient = new Client($uri);
+        $this->client = new Client($uri);
     }
     
     /**
@@ -48,6 +48,6 @@ class WebSocketClient implements IWebSocketClient
         }
 
         // Sends the request
-        $this->textalkWebSocketClient->send(json_encode($webSocketRequest));
+        $this->client->send(json_encode($webSocketRequest));
     }
 }

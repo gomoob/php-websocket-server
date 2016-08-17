@@ -35,7 +35,7 @@ class MessageParser implements IMessageParser
             throw new \InvalidArgumentException('No \'type\' property found !');
         }
         
-        $message = null;
+        $message = new Message($arrayMessage['type']);
         
         // If the 'metadata' property is provided
         if (array_key_exists('metadata', $arrayMessage) && $arrayMessage['metadata'] !== null) {
@@ -43,10 +43,8 @@ class MessageParser implements IMessageParser
             if (!is_array($arrayMessage['metadata'])) {
                 throw new \InvalidArgumentException('The \'metadata\' property is not an array !');
             }
-            
+
             $message = new Message($arrayMessage['type'], $arrayMessage['metadata']);
-        } else {
-            $message = new Message($arrayMessage['type']);
         }
 
         return $message;
