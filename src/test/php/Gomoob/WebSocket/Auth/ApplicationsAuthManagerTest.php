@@ -215,7 +215,7 @@ class ApplicationsAuthManagerTest extends TestCase
         $webSocketRequest = WebSocketRequest::create('Hello World !');
 
         // Test with no options configured
-        $applicationsAuthManager = new ApplicationsAuthManager();
+        $authManager = new ApplicationsAuthManager();
 
         // Test with a YAML configuration file which does not exists
         try {
@@ -263,7 +263,7 @@ class ApplicationsAuthManagerTest extends TestCase
         }
         
         // Test with a valid configuration file
-        $applicationsAuthManager = new ApplicationsAuthManager(
+        $authManager = new ApplicationsAuthManager(
             [
                 'configurationFile' => TEST_RESOURCES_DIRECTORY . '/auth.yml'
             ]

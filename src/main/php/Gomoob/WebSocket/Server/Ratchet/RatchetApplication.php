@@ -180,12 +180,13 @@ class RatchetApplication implements MessageComponentInterface
     /**
      * {@inheritdoc}
      */
-    public function onError(ConnectionInterface $connection, \Exception $ex)
+    public function onError(ConnectionInterface $connection, \Exception $exception)
     {
         $this->logger->error(
             'Error encountered on WebSocket connection having resource id \'{resourceId}\'.',
             [
-                'resourceId' => $connection->resourceId
+                'resourceId' => $connection->resourceId,
+                'exception' => $exception
             ]
         );
         $this->logger->error(
@@ -195,18 +196,5 @@ class RatchetApplication implements MessageComponentInterface
             ]
         );
         $connection->close();
-        $this->logger->error(
-            ' WebSocket connection having resource id \'{resourceId}\' closed.',
-            [
-                'resourceId' => $connection->resourceId
-            ]
-        );
-        $this->tagsTree->delete($connection);
-        $this->logger->error(
-            ' WebSocket connection having resource id \'{resourceId}\' deleted.',
-            [
-                'resourceId' => $connection->resourceId
-            ]
-        );
     }
 }
