@@ -120,24 +120,35 @@ class RatchetApplication implements MessageComponentInterface
         $this->logger->debug(
             'Receiving message on WebSocket connection with resource id \'{resourceId}\'.',
             [
+                'resourceId' => $connection->resourceId,
                 'strMessage' => $strMessage
             ]
         );
         
         // Decodes the WebSocket request
-        $webSocketRequest = null; 
+        $webSocketRequest = null;
         
         try {
             $webSocketRequest = WebSocketRequest::createFromJSON($strMessage, $this->messageParser);
-        } catch(\InvalidArgumentException $iaex) {
-        	$errorMessage = 'Fail to parse WebSocket request string !';
-        	$this->logger->debug($errorMessage, ['exception' => $iaex]);
-        	throw new \InvalidArgumentException($errorMessage, -1, $iaex);
+        } catch (\InvalidArgumentException $iaex) {
+            $errorMessage = 'Fail to parse WebSocket request string !';
+            $this->logger->debug($errorMessage, ['exception' => $iaex]);
+            throw new \InvalidArgumentException($errorMessage, -1, $iaex);
         }
         
         // Checks if message sending is authorized
-        if ($this->authManager && !$this->authManager->authorizeSend($connection)) {
-            throw new \InvalidArgumentException('Message sending is not authorized !');
+        if ($this->authManager && !$this->authManager->authorizeSend($connection, $webSocketRequest)) {
+            $errorMessage =
+                'Message sending is not authorized on WebSocket connection with resource id \'' .
+                $connection->resourceId . '\' !';
+            $this->logger->debug(
+                $errorMessage,
+                [
+                    'resourceId' => $connection->resourceId,
+                    'strMessage' => $strMessage
+                ]
+            );
+            throw new \InvalidArgumentException($errorMessage);
         }
         
         // Gets the connections associated to the provided tags

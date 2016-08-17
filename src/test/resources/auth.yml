@@ -1,0 +1,8 @@
+applications:
+  - 
+    key: application1
+    secret: 7UxuWw3ZcFBW85U2rdtjKZeStMHKVAzf8jpqkb5eAPBkd37F2sz4x3WS3GnMk7gq
+    authorizeOpen: true
+  - key: application2
+    secret: Kmrw5apmzmQMseAttckp6e7APeCDVtL58QzSPaKqqdHUF469hfhWyue3ns363kn5
+    authorizeOpen: false
