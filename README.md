@@ -165,7 +165,8 @@ class MyMessage implements \JsonSerializable {
            'messageProperty1' => $this->messageProperty1;
         ];
    }
-}```
+}
+```
 
 Then we have to implement a message parser by extending the `\Gomoob\WebSocket\IMessageParser` class.
 
