@@ -47,7 +47,7 @@ class WebSocketServer implements IWebSocketServer
      *  * `messageParser` A component used to parse messages ;
      *  * `authManager` A component used to manage authorizations.
      */
-    public static function factory(array $options = ['port' => 8080, 'address' => '0.0.0.0'])
+    public static function factory(array $options = ['port' => 80, 'address' => '0.0.0.0'])
     {
         return new WebSocketServer($options);
     }
@@ -62,7 +62,7 @@ class WebSocketServer implements IWebSocketServer
      *  * `messageParser` A component used to parse messages ;
      *  * `authManager` A component used to manage authorizations.
      */
-    public function __construct(array $options = ['port' => 8080, 'address' => '0.0.0.0'])
+    public function __construct(array $options = ['port' => 80, 'address' => '0.0.0.0'])
     {
         // Initialize the Ratchet application
         $this->ratchetApplication = new RatchetApplication($options);
@@ -72,7 +72,8 @@ class WebSocketServer implements IWebSocketServer
             new HttpServer(
                 new WsServer($this->ratchetApplication)
             ),
-            $options['port']
+            $options['port'],
+            $options['address']
         );
     }
     

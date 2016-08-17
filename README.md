@@ -332,6 +332,11 @@ WebSocketClient::factory('ws://localhost:8080')->send(
 
 # Release history
 
+## 1.0.3 (2016-08-17)
+ * Fix `port` and `address` options problems while creating a `WebSocketServer`, the parameter were not 
+   transmitted to the Ratchet server ;
+ * Now the default port number is `80` which is the default Ratchet server port.
+
 ## 1.0.2 (2016-08-17)
  * Add missing `symfony/yaml` composer dependency, otherwise problems was encountered while running 
    `composer update --no-dev` ;
