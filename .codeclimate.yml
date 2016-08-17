@@ -1,0 +1,10 @@
+exclude_paths:
+  - "Gruntfile.js"
+engines:
+  phpcodesniffer:
+    enabled: true
+  phpmd:
+    enabled: true
+  ratings:
+    paths:
+      - "src/**.php"
