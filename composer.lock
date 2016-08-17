@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ae62beaf3d7c4efb1ca9fe7819954046",
-    "content-hash": "2036dda2c7a86d7cfc297bc504a07b04",
+    "hash": "124e3ab31274fab62e6a04305a7ccd61",
+    "content-hash": "c46767d975ff85ad59f7c7ac50f8f3e1",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -835,6 +835,64 @@
                 "silex"
             ],
             "time": "2012-12-19 10:50:58"
+        },
+        {
+            "name": "codeclimate/php-test-reporter",
+            "version": "v0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeclimate/php-test-reporter.git",
+                "reference": "3a2d3ebdc1df5acf372458c15041af240a6fc016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeclimate/php-test-reporter/zipball/3a2d3ebdc1df5acf372458c15041af240a6fc016",
+                "reference": "3a2d3ebdc1df5acf372458c15041af240a6fc016",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3",
+                "satooshi/php-coveralls": "1.0.*",
+                "symfony/console": ">=2.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*",
+                "phpunit/phpunit": "3.7.*@stable"
+            },
+            "bin": [
+                "composer/bin/test-reporter"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "CodeClimate\\Component": "src/",
+                    "CodeClimate\\Bundle": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Code Climate",
+                    "email": "hello@codeclimate.com",
+                    "homepage": "https://codeclimate.com"
+                }
+            ],
+            "description": "PHP client for reporting test coverage to Code Climate",
+            "homepage": "https://github.com/codeclimate/php-test-reporter",
+            "keywords": [
+                "codeclimate",
+                "coverage"
+            ],
+            "time": "2016-04-19 16:54:33"
         },
         {
             "name": "composer/semver",

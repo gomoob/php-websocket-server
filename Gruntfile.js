@@ -42,21 +42,6 @@ module.exports = function(grunt) {
             		}
             	},
                 
-                paratest : {
-                    command : (function() {
-                       
-                        var command = 'vendor\bin\paratest'; 
-                        command += ' --processes=4';
-                        command += ' --functional';
-                        command += ' --colors';
-                        command += ' --configuration="phpunit.xml"';
-                        command += ' --path="src/test/php"';
-
-                        return command;
-
-                    })()
-                },
-                
                 pdepend : {
                     command : (function() {
                         

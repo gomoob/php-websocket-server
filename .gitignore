@@ -4,3 +4,4 @@ elasticsearch.log
 /node_modules/
 /target/
 /scheduled_task_manager.lock
+/build/

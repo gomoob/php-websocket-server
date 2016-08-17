@@ -33,6 +33,7 @@
 	},
 	"require-dev" : {
 		"brianium/paratest" : "^0.14.0",
+		"codeclimate/php-test-reporter" : "^0.3.2",
 		"pdepend/pdepend" : "^2.2.4",
 		"phpdocumentor/phpdocumentor" : "^2.9.0",
 		"phploc/phploc" : "^3.0.1",
