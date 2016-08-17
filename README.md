@@ -332,5 +332,5 @@ WebSocketClient::factory('ws://localhost:8080')->send(
 
 # Release history
 
-## 0.1.0 (2016-08-17)
+## 1.0.0 (2016-08-17)
  * First release.
