@@ -29,13 +29,13 @@ class WebSocketClientTest extends TestCase
         $webSocketClient = new WebSocketClient('ws://localhost:8080');
         
         // Backup the Textalk WebSocket client
-        $reflectionProperty = new \ReflectionProperty($webSocketClient, 'textalkWebSocketClient');
+        $reflectionProperty = new \ReflectionProperty($webSocketClient, 'client');
         $reflectionProperty->setAccessible(true);
-        $textalkWebSocketClient = $reflectionProperty->getValue($webSocketClient);
-        $textalkWebSocketClientMock = $this->createMock(\WebSocket\Client::class);
-        $reflectionProperty->setValue($webSocketClient, $textalkWebSocketClientMock);
+        $client = $reflectionProperty->getValue($webSocketClient);
+        $clientMock = $this->createMock(\WebSocket\Client::class);
+        $reflectionProperty->setValue($webSocketClient, $clientMock);
         
-        $textalkWebSocketClientMock->expects($this->exactly(4))->method('send')->withConsecutive(
+        $clientMock->expects($this->exactly(4))->method('send')->withConsecutive(
             [
                 $this->equalTo(
                     '{'.
@@ -84,6 +84,6 @@ class WebSocketClientTest extends TestCase
             WebSocketRequest::create(Message::create())->setMetadata(['token' => 'A_TOKEN'])
         );
 
-        $reflectionProperty->setValue($webSocketClient, $textalkWebSocketClient);
+        $reflectionProperty->setValue($webSocketClient, $client);
     }
 }

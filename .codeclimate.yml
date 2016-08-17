@@ -14,4 +14,4 @@ ratings:
   paths:
   - "**.php"
 exclude_paths:
-  - "Gruntfile.js"
+- "Gruntfile.js"
