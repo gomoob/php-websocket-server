@@ -332,6 +332,12 @@ WebSocketClient::factory('ws://localhost:8080')->send(
 
 # Release history
 
+## 1.0.2 (2016-08-17)
+ * Add missing `symfony/yaml` composer dependency, otherwise problems was encountered while running 
+   `composer update --no-dev` ;
+ * Add missing `monolog/monolog` composer dependency, , otherwise problems was encountered while running 
+   `composer update --no-dev`.
+
 ## 1.0.1 (2016-08-17)
  * Configure specific Eclipse validator rules ;
  * Add MIT license.
