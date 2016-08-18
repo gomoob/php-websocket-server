@@ -40,6 +40,23 @@ class WebSocketServer implements IWebSocketServer
     /**
      * Creates a new Gomoob Web Socket server instance.
      *
+     * **NOTE** This function is an alias of the `factory(array $options)` function.
+     *
+     * @param array $options (Optional) options used to configure the server, the following options are supported :
+     *  * `port` The port to server sockets on string ;
+     *  * `address` The address to receive sockets on (0.0.0.0 means receive connections from any) ;
+     *  * `logger` A PSR logger used to log messages, the server only logs error and debug messages ;
+     *  * `messageParser` A component used to parse messages ;
+     *  * `authManager` A component used to manage authorizations.
+     */
+    public static function create(array $options = ['port' => 80, 'address' => '0.0.0.0'])
+    {
+        return static::factory($options);
+    }
+
+    /**
+     * Creates a new Gomoob Web Socket server instance.
+     *
      * @param array $options (Optional) options used to configure the server, the following options are supported :
      *  * `port` The port to server sockets on string ;
      *  * `address` The address to receive sockets on (0.0.0.0 means receive connections from any) ;
@@ -72,8 +89,8 @@ class WebSocketServer implements IWebSocketServer
             new HttpServer(
                 new WsServer($this->ratchetApplication)
             ),
-            $options['port'],
-            $options['address']
+            array_key_exists('port', $options) ? $options['port'] : 80,
+            array_key_exists('address', $options) ? $options['address'] : '0.0.0.0'
         );
     }
     

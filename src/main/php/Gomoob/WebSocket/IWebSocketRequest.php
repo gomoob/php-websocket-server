@@ -43,9 +43,18 @@ interface IWebSocketRequest extends \JsonSerializable
     public function setMessage($message);
     
     /**
-     * Gets the additional metadata to transport with the WebSocket request.
+     * Gets the metadata to transport with the WebSocket request.
      *
-     * @return array the additional metadata to transport with the WebSocket request.
+     * **NOTE** Metadata are different than tags and do not fullfill the same goals :
+     *  * They are not used to identify / pick WebSocket connections ;
+     *  * They should not be used provide informations on client side, the metadata are never forwarded to clients and
+     *    are only used by the WebSocket server ;
+     *  * They should be used to help specific Gomoob WebSocket server components to work, for exemple an authorization
+     *    manager could use specific `key` and `secret` metadata properties to manage its authorizations ;
+     *  * The type of their properties are not restricted to `int` or `string` as tags, metadata properties can be of
+     *    any primitive type or arrays of primitive types (arrays of any depth are authorized).
+     *
+     * @return array the metadata to transport with the WebSocket request.
      */
     public function getMetadata();
 
@@ -61,9 +70,18 @@ interface IWebSocketRequest extends \JsonSerializable
     public function setTags(array $tags = []);
 
     /**
-     * Sets the additional metadata to transport with the WebSocket request.
+     * Sets the metadata to transport with the WebSocket request.
      *
-     * @param array $metadata the additional metadata to transport with the WebSocket request.
+     * **NOTE** Metadata are different than tags and do not fullfill the same goals :
+     *  * They are not used to identify / pick WebSocket connections ;
+     *  * They should not be used provide informations on client side, the metadata are never forwarded to clients and
+     *    are only used by the WebSocket server ;
+     *  * They should be used to help specific Gomoob WebSocket server components to work, for exemple an authorization
+     *    manager could use specific `key` and `secret` metadata properties to manage its authorizations ;
+     *  * The type of their properties are not restricted to `int` or `string` as tags, metadata properties can be of
+     *    any primitive type or arrays of primitive types (arrays of any depth are authorized).
+     *
+     * @param array $metadata the metadata to transport with the WebSocket request.
      *
      * @return \Gomoob\WebSocket\IWebSocketRequest this instance.
      */

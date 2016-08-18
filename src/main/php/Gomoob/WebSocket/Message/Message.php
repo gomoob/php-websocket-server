@@ -73,7 +73,11 @@ class Message implements IMessage
             $data['type'] = $this->type;
         }
 
+        // Serialize metadata, if empty serialize as an empty object
         $data['metadata'] = $this->metadata;
+        if (!$data['metadata']) {
+            $data['metadata'] = new \stdClass();
+        }
 
         return $data;
     }

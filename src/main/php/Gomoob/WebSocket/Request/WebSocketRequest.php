@@ -26,11 +26,20 @@ class WebSocketRequest implements IWebSocketRequest
     protected $message;
     
     /**
-     * The additional metadata to transport with the WebSocket request.
+     * The metadata to transport with the WebSocket request.
+     *
+     * **NOTE** Metadata are different than tags and do not fullfill the same goals :
+     *  * They are not used to identify / pick WebSocket connections ;
+     *  * They should not be used provide informations on client side, the metadata are never forwarded to clients and
+     *    are only used by the WebSocket server ;
+     *  * They should be used to help specific Gomoob WebSocket server components to work, for exemple an authorization
+     *    manager could use specific `key` and `secret` metadata properties to manage its authorizations ;
+     *  * The type of their properties are not restricted to `int` or `string` as tags, metadata properties can be of
+     *    any primitive type or arrays of primitive types (arrays of any depth are authorized).
      *
      * @var array
      */
-    protected $metadata;
+    protected $metadata = [];
 
     /**
      * The tags associated to the Web Socket request, on server side the tags are used to identify Web Socket
@@ -43,14 +52,14 @@ class WebSocketRequest implements IWebSocketRequest
     /**
      * Creates a new instance of the WebSocket request.
      *
+     * **NOTE** This function is an alias of the `factory($message)` function.
+     *
      * @param string | \JsonSerializable $message the message to be sent with the Web Socket connections associated to
      *        the Web Socket request tags.
-     * @param array $tags (Optional) the tags associated to the Web Socket request, on server side the tags are used to
-     *        identify Web Socket connections to which one to send the associated message.
      */
-    public static function create($message, array $tags = [])
+    public static function create($message)
     {
-        return new WebSocketRequest($message, $tags);
+        return static::factory($message);
     }
     
     /**
@@ -155,13 +164,23 @@ class WebSocketRequest implements IWebSocketRequest
      *
      * @param string | \JsonSerializable $message the message to be sent with the Web Socket connections associated to
      *        the Web Socket request tags.
+     */
+    public static function factory($message)
+    {
+        return new WebSocketRequest($message);
+    }
+    
+    /**
+     * Creates a new instance of the WebSocket request.
+     *
+     * @param string | \JsonSerializable $message the message to be sent with the Web Socket connections associated to
+     *        the Web Socket request tags.
      * @param array $tags (Optional) the tags associated to the Web Socket request, on server side the tags are used to
      *        identify Web Socket connections to which one to send the associated message.
      */
-    public function __construct($message, array $tags = [])
+    public function __construct($message)
     {
         $this->message = $message;
-        $this->tags = $tags;
     }
     
     /**
@@ -226,18 +245,24 @@ class WebSocketRequest implements IWebSocketRequest
      */
     public function jsonSerialize()
     {
+        // Serialize message, suppose string by default
         $data = ['message' => $this->message];
-        
         if ($this->message instanceof \JsonSerializable) {
             $data['message'] = $this->message->jsonSerialize();
         }
 
-        $data['tags'] = $this->tags;
-        
-        if ($this->metadata) {
-            $data['metadata'] = $this->metadata;
+        // Serialize metadata, if empty serialize as an empty object
+        $data['metadata'] = $this->metadata;
+        if (!$data['metadata']) {
+            $data['metadata'] = new \stdClass();
         }
-        
+
+        // Serialize tags, if empty serialize as an empty object
+        $data['tags'] = $this->tags;
+        if (!$data['tags']) {
+            $data['tags'] = new \stdClass();
+        }
+
         return $data;
     }
     

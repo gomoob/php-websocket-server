@@ -135,7 +135,7 @@ class RatchetApplication implements MessageComponentInterface
             $this->logger->debug($errorMessage, ['exception' => $iaex]);
             throw new \InvalidArgumentException($errorMessage, -1, $iaex);
         }
-        
+
         // Checks if message sending is authorized
         if ($this->authManager && !$this->authManager->authorizeSend($connection, $webSocketRequest)) {
             $errorMessage =

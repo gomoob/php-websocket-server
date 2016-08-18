@@ -35,53 +35,163 @@ class WebSocketClientTest extends TestCase
         $clientMock = $this->createMock(\WebSocket\Client::class);
         $reflectionProperty->setValue($webSocketClient, $clientMock);
         
-        $clientMock->expects($this->exactly(4))->method('send')->withConsecutive(
+        $clientMock->expects($this->exactly(6))->method('send')->withConsecutive(
             [
+                // Test 1
+                //  - no tags
+                //  - empty message
                 $this->equalTo(
                     '{'.
-                        '"message":{"metadata":[]},'.
-                        '"tags":[]' .
+                        '"message":{"metadata":{}},'.
+                        '"metadata":{},' .
+                        '"tags":{}' .
                     '}'
                 )
             ],
             [
+                // Test 2
+                //  - no tags
+                //  - a message with type
+                //  - metadata on request
                 $this->equalTo(
                     '{'.
-                        '"message":{"type":"MY_TYPE",' .
-                        '"metadata":{"prop1":"prop1Value","prop2":"prop2Value"}},' .
-                        '"tags":[]' .
+                        '"message":{"type":"MY_TYPE","metadata":{}},' .
+                        '"metadata":{"prop1":"prop1Value","prop2":"prop2Value"},' .
+                        '"tags":{}' .
                     '}'
                 )
             ],
             [
+                // Test 3
+                //  - tags
+                //  - a message with type
+                //  - no metadata on request
                 $this->equalTo(
                     '{' .
-                        '"message":{"type":"MY_TYPE","metadata":[]},' .
+                        '"message":{"type":"MY_TYPE","metadata":{}},' .
+                        '"metadata":{},' .
                         '"tags":{"tag1":"tag1Value","tag2":"tag2Value"}' .
                     '}'
                 )
             ],
             [
-                $this->equalTo('{"message":{"metadata":[]},"tags":[],"metadata":{"token":"A_TOKEN"}}')
+                // Test 4
+                //  - no tags
+                //  - a message
+                //  - metadata on request
+                $this->equalTo(
+                    '{' .
+                        '"message":{"metadata":{}},' .
+                        '"metadata":{"token":"A_TOKEN"},' .
+                        '"tags":{}' .
+                    '}'
+                )
+            ],
+            [
+                // Test 5
+                //  - no tags
+                //  - a message
+                //  - metadata on request
+                //  - default metadata on client
+                $this->equalTo(
+                    '{' .
+                        '"message":{"metadata":{}},' .
+                        '"metadata":{"met1":"met1ValueClient","met2":"met2ValueRequest","met3":"met3ValueClient"},' .
+                        '"tags":{}' .
+                    '}'
+                )
+            ],
+            [
+                // Test 6
+                //  - no tags
+                //  - a message
+                //  - metadata on request
+                //  - default metadata on client
+                $this->equalTo(
+                    '{' .
+                        '"message":{"metadata":{}},' .
+                        '"metadata":{"met1":"met1ValueClient","met2":"met2ValueRequest","met3":"met3ValueClient"},' .
+                        '"tags":{"tag1":"tag1ValueClient","tag2":"tag2ValueClient","tag3":"tag3ValueRequest"}' .
+                    '}'
+                )
             ]
         );
-        
-        // Test with no tags and an empty message
-        $webSocketClient->send(WebSocketRequest::create(Message::create()));
-        
-        // Test with no tags and a message with type and metadata
+
+        // Test 1
+        //  - no tags
+        //  - empty message
         $webSocketClient->send(
-            WebSocketRequest::create(Message::create('MY_TYPE', ['prop1'=>'prop1Value','prop2'=>'prop2Value']))
+            WebSocketRequest::factory(Message::create())
+        );
+
+        // Test 2
+        //  - no tags
+        //  - a message with type
+        //  - metadata on request
+        $webSocketClient->send(
+            WebSocketRequest::factory(Message::create('MY_TYPE'))
+                ->setMetadata(['prop1'=>'prop1Value','prop2'=>'prop2Value'])
         );
         
-        // Test with tags and a message with type and metadata
+        // Test 3
+        //  - tags
+        //  - a message with type
+        //  - no metadata on request
         $webSocketClient->send(
-            WebSocketRequest::create(Message::create('MY_TYPE'), ['tag1' => 'tag1Value', 'tag2' => 'tag2Value'])
+            WebSocketRequest::factory(Message::create('MY_TYPE'))
+                ->setTags(['tag1' => 'tag1Value', 'tag2' => 'tag2Value'])
         );
         
-        // Test with additional metadata
+        // Test 4
+        //  - no tags
+        //  - a message
+        //  - metadata on request
         $webSocketClient->send(
-            WebSocketRequest::create(Message::create())->setMetadata(['token' => 'A_TOKEN'])
+            WebSocketRequest::factory(Message::create())
+                ->setMetadata(['token' => 'A_TOKEN'])
+        );
+
+        // Test 5
+        //  - no tags
+        //  - a message
+        //  - metadata on request
+        //  - default metadata on client
+        $webSocketClient->setDefaultMetadata(
+            [
+                'met1' => 'met1ValueClient',
+                'met2' => 'met2ValueClient',
+                'met3' => 'met3ValueClient'
+            ]
+        );
+        $webSocketClient->send(
+            WebSocketRequest::factory(Message::create())
+                ->setMetadata(['met2' => 'met2ValueRequest'])
+        );
+        
+        // Test 6
+        //  - a message
+        //  - metadata on request
+        //  - tags on request
+        //  - default metadata on client
+        //  - default tags on client
+        $webSocketClient->setDefaultMetadata(
+            [
+                'met1' => 'met1ValueClient',
+                'met2' => 'met2ValueClient',
+                'met3' => 'met3ValueClient'
+            ]
+        );
+        $webSocketClient->setDefaultTags(
+            [
+                'tag1' => 'tag1ValueClient',
+                'tag2' => 'tag2ValueClient',
+                'tag3' => 'tag3ValueClient'
+            ]
+        );
+        $webSocketClient->send(
+            WebSocketRequest::factory(Message::create())
+                ->setMetadata(['met2' => 'met2ValueRequest'])
+                ->setTags(['tag3' => 'tag3ValueRequest'])
         );
 
         $reflectionProperty->setValue($webSocketClient, $client);

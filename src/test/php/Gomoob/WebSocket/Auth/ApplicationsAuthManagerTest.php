@@ -124,7 +124,7 @@ class ApplicationsAuthManagerTest extends TestCase
         $this->assertFalse(
             ApplicationsAuthManager::factory()->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')
+                WebSocketRequest::factory('Hello !')
             )
         );
         
@@ -132,7 +132,7 @@ class ApplicationsAuthManagerTest extends TestCase
         $this->assertFalse(
             ApplicationsAuthManager::factory()->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')->setMetadata(
+                WebSocketRequest::factory('Hello !')->setMetadata(
                     [
                         'met1' => 'met1Value',
                         'met2' => 'met2Value'
@@ -145,7 +145,7 @@ class ApplicationsAuthManagerTest extends TestCase
         $this->assertFalse(
             ApplicationsAuthManager::factory()->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')->setMetadata(
+                WebSocketRequest::factory('Hello !')->setMetadata(
                     [
                         'key' => 'unknown',
                         'secret' => 'XXXXXXXX'
@@ -162,7 +162,7 @@ class ApplicationsAuthManagerTest extends TestCase
                 ]
             )->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')->setMetadata(
+                WebSocketRequest::factory('Hello !')->setMetadata(
                     [
                         'key' => 'unknown',
                         'secret' => 'XXXXXXXX'
@@ -179,7 +179,7 @@ class ApplicationsAuthManagerTest extends TestCase
                 ]
             )->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')->setMetadata(
+                WebSocketRequest::factory('Hello !')->setMetadata(
                     [
                         'key' => 'application1',
                         'secret' => 'XXXXXXXX'
@@ -196,7 +196,7 @@ class ApplicationsAuthManagerTest extends TestCase
                 ]
             )->authorizeSend(
                 $this->createIoConnection(),
-                WebSocketRequest::create('Hello !')->setMetadata(
+                WebSocketRequest::factory('Hello !')->setMetadata(
                     [
                         'key' => 'application1',
                         'secret' => '7UxuWw3ZcFBW85U2rdtjKZeStMHKVAzf8jpqkb5eAPBkd37F2sz4x3WS3GnMk7gq'
@@ -212,7 +212,7 @@ class ApplicationsAuthManagerTest extends TestCase
     public function testConstruct()
     {
         $ioConnection = $this->createIoConnection();
-        $webSocketRequest = WebSocketRequest::create('Hello World !');
+        $webSocketRequest = WebSocketRequest::factory('Hello World !');
 
         // Test with no options configured
         $authManager = new ApplicationsAuthManager();

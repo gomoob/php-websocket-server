@@ -61,6 +61,23 @@ class ApplicationsAuthManager implements IAuthManager
     /**
      * Creates a new instance of the applications authorization manager.
      *
+     * **NOTE** This function is an alias of the `factory(array $options)` function.
+     *
+     * @param array $options Options used to configure the component, the following options are available :
+     *  * `configurationFile` an absolute path to a YAML configuration file which declares the applications ;
+     *  * `authorizeOpen` a boolean used to indicate if connection opening is authorized by default (default is `true`)
+     *   ;
+     *
+     * @throws \InvalidArgumentException if the provided configuration file cannot be read or has an invalid format.
+     */
+    public static function create(array $options = [])
+    {
+        return static::factory($options);
+    }
+    
+    /**
+     * Creates a new instance of the applications authorization manager.
+     *
      * @param array $options Options used to configure the component, the following options are available :
      *  * `configurationFile` an absolute path to a YAML configuration file which declares the applications ;
      *  * `authorizeOpen` a boolean used to indicate if connection opening is authorized by default (default is `true`)

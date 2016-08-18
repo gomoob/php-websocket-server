@@ -9,7 +9,7 @@
 [![Code Climate](https://img.shields.io/codeclimate/github/gomoob/php-websocket-server.svg?style=flat)](https://codeclimate.com/github/gomoob/php-websocket-server)
 [![License](https://img.shields.io/packagist/l/gomoob/php-websocket-server.svg?style=flat)](https://packagist.org/packages/gomoob/php-websocket-server)
 
-# Introduction
+## Introduction
 
 The Gomoob WebSocket server is a simple [Ratchet](http://socketo.me "Ratchet") server which works with custom tags 
 to easily forward messages to clients depending on custom tags.
@@ -41,9 +41,9 @@ $phpClient = new WebSocketClient('ws://localhost:8080');
 $phpClient->send(WebSocketRequest::create($message, ['language' => 'FR']);
 ```
 
-# Installation
+## Installation
 
-## Server side (run the server)
+### Server side (run the server)
 
 Running a server requires only one line of code.
 
@@ -54,7 +54,7 @@ echo "WebSocket server started, enter Ctrl+C to stop server." . PHP_EOL;
 \Gomoob\WebSocket\Server\WebSocketServer::factory()->run();
 ```
 
-## Client side (PHP)
+### Client side (PHP)
 
 First pull the project with composer using the following dependency.
 
@@ -84,7 +84,7 @@ $response = $phpClient->send(
 );
 ```
 
-# Advanced configuration
+## Advanced configuration
 
 The default behavior of the Gomoob WebSocket server is the following !
 
@@ -95,7 +95,7 @@ The default behavior of the Gomoob WebSocket server is the following !
 
 If one of those behaviors does not fit your need please read the following sub sections. You can also read the `src/test/server.php` file which shows how to start a server with custom message parsing and authorizations.
 
-## Message parser
+### Message parser
 
 By default the WebSocket server will accept plain string messages, if you try to send a JSON object then you'll 
 encounter the following exception. 
@@ -203,7 +203,7 @@ WebSocketServer::factory(
 )->run();
 ```
 
-## Authorization Manager
+### Authorization Manager
 
 By default the WebSocket server will accept all connections and message sendings, in most cases this behavior is not 
 expected because anybody could open a WebSocket on your server and try to forward messages to all connected clients 
@@ -243,7 +243,7 @@ interface IAuthManager
 So its very easy to manage authorizations, just return `true` or `false` with the `authorizeOpen(...)` or 
 `authorizeSend(...)` functions.
 
-### The `ApplicationsAuthManager`
+#### The `ApplicationsAuthManager`
 
 To easier authorization we provide an authorization manager which allows to declare several applications with `key` 
 and `secret` properties.
@@ -330,22 +330,49 @@ WebSocketClient::factory('ws://localhost:8080')->send(
 );
 ```
 
-# Release history
+## Docker container
 
-## 1.0.3 (2016-08-17)
+To help you start quickly we also provide a Docker container here https://hub.docker.com/r/gomoob/php-websocket-server.
+
+## Release history
+
+### 1.1.0 (2016-08-18)
+ * Add more PHP Documentor documentation about the goals of `metadata` in 
+   the `\Gomoob\WebSocket\IWebSocketRequest` interface and the 
+   `\Gomoob\WebSocket\Request\WebSocketRequest` class ; 
+ * Add management of `defaultMetadata` in the `\Gomoob\WebSoscket\IWebSocketClient` interface and the 
+   `\Gomoob\WebSocket\Client\WebSocketClient` class ;
+ * Add management of `defaultTags` in the `\Gomoob\WebSocket\IWebSocketClient` interface and the 
+   `\Gomoob\WebSocket\Client\WebSocketClient` class ; 
+ * Improve `\Gomoob\WebSocket\Message\Message` serialization ;
+ * Improve `\Gomoob\WebSocket\Request\WebSocketRequest` serialization ;
+ * Now all the factory methods can be calls with a `factory(...)` method or an alias `create(...)` method.
+
+### 1.0.3 (2016-08-17)
  * Fix `port` and `address` options problems while creating a `WebSocketServer`, the parameter were not 
    transmitted to the Ratchet server ;
  * Now the default port number is `80` which is the default Ratchet server port.
 
-## 1.0.2 (2016-08-17)
+### 1.0.2 (2016-08-17)
  * Add missing `symfony/yaml` composer dependency, otherwise problems was encountered while running 
    `composer update --no-dev` ;
  * Add missing `monolog/monolog` composer dependency, , otherwise problems was encountered while running 
    `composer update --no-dev`.
 
-## 1.0.1 (2016-08-17)
+### 1.0.1 (2016-08-17)
  * Configure specific Eclipse validator rules ;
  * Add MIT license.
 
-## 1.0.0 (2016-08-17)
+### 1.0.0 (2016-08-17)
  * First release.
+
+## About Gomoob
+
+At [Gomoob](https://www.gomoob.com) we build high quality software with awesome Open Source frameworks everyday. Would 
+you like to start your next project with us? That's great! Give us a call or send us an email and we will get back to 
+you as soon as possible !
+
+You can contact us by email at [contact@gomoob.com](mailto:contact@gomoob.com) or by phone number 
+[(+33) 6 85 12 81 26](tel:+33685128126) or [(+33) 6 28 35 04 49](tel:+33685128126).
+
+Visit also http://gomoob.github.io to discover more Open Source softwares we develop.
