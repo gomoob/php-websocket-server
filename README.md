@@ -84,6 +84,39 @@ $response = $phpClient->send(
 );
 ```
 
+If you want to write solid unit test we also provide the `\Gomoob\WebSocket\Client\WebSocketClientMock` 
+class. This class is a utility mock which is very easy to use.
+
+```php
+// Somewhere in our code we use a \Gomoob\WebSocket\IWebSocketClient ...
+// We suppose this code is implemented in MyPowerfulService->serviceMethod();
+$phpClient->send(WebSocketRequest::create('Message 0.')->setTags(['tag0' => 'tag0Value']));
+$phpClient->send(WebSocketRequest::create('Message 1.')->setTags(['tag1' => 'tag0Value']));
+$phpClient->send(WebSocketRequest::create('Message 2.')->setTags(['tag0' => 'tag0Value', 'tag1' => 'tag1Value']));
+		
+// Then we write a test case by replacing the real WebSocket client implementation with the mock one
+class SampleTestCase extends TestCase
+{
+     public function setUp() {
+        $this->webSocketClient = new WebSocketClientMock();
+        $this->myPowerfulService->setWebSocketClient($this->webSocketClient);
+     }
+
+    public function testServiceMethod() {
+    
+        // Calls the method to test
+        $this->myPowerfulService->serviceMethod();
+    
+        // Checks the right requests were sent
+        $webSocketRequests = $this->webSocketClient->findByTags(['tag0' => 'tag0Value']);
+		  $this->assertCount(2, $webSocketRequests);
+		  $this->assertContains($webSocketRequest0, $webSocketRequests);
+		  $this->assertNotContains($webSocketRequest1, $webSocketRequests);
+		  $this->assertContains($webSocketRequest2, $webSocketRequests);
+    }
+}
+```
+
 ## Advanced configuration
 
 The default behavior of the Gomoob WebSocket server is the following !
