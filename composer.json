@@ -1,7 +1,7 @@
 {
 	"name" : "gomoob/php-websocket-server",
 	"description" : "WebSocket server with tags management, forward your messages on the right clients with ease !",
-	"version" : "1.1.0",
+	"version" : "1.2.0",
 	"license" : "MIT",
 	"minimum-stability" : "stable",
 	"prefer-stable" : true,

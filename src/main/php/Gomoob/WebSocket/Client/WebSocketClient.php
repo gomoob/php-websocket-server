@@ -8,7 +8,6 @@
  */
 namespace Gomoob\WebSocket\Client;
 
-use Gomoob\WebSocket\IWebSocketClient;
 use Gomoob\WebSocket\IWebSocketRequest;
 
 use WebSocket\Client;
@@ -18,7 +17,7 @@ use WebSocket\Client;
  *
  * @author GOMOOB SARL (contact@gomoob.com)
  */
-class WebSocketClient implements IWebSocketClient
+class WebSocketClient extends AbstractWebSocketClient
 {
     /**
      * The Textalk WebSocket client used to send messages.
@@ -28,29 +27,6 @@ class WebSocketClient implements IWebSocketClient
     protected $client;
 
     /**
-     * Default metadata to set on all requests sent with the client, those metadata will be merged with the
-     * metadata specified on the requests.
-     *
-     * **WARNING** If a metadata property specifically defined on a request has the same name as a default metadata
-     *             property defined on the WebSocket client then the metadata property defined with the request
-     *             overwrites the default metadata property.
-     *
-     * @var array
-     */
-    protected $defaultMetadata = [];
-    
-    /**
-     * Default tags to set on all requests sent with the client, those tags will be merged with the tags specified on
-     * the requests.
-     *
-     * **WARNING** If a tag property specifically defined on a request has the same name as a default tag
-     *             property defined on the WebSocket client then the tag property defined with the request
-     *             overwrites the default tag property.
-     * @var array
-     */
-    protected $defaultTags = [];
-    
-    /**
      * Creates a new instance of the Gomoob Web Socket client.
      *
      * @param string $uri the ws/wss URI used to connect to the Gomoob WebSocket server.
@@ -58,22 +34,6 @@ class WebSocketClient implements IWebSocketClient
     public function __construct($uri)
     {
         $this->client = new Client($uri);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDefaultMetadata()
-    {
-        return $this->defaultMetadata;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function getDefaultTags()
-    {
-        return $this->defaultTags;
     }
 
     /**
@@ -107,25 +67,5 @@ class WebSocketClient implements IWebSocketClient
 
         // Sends the request
         $this->client->send(json_encode($clonedWebSocketRequest));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setDefaultMetadata(array $defaultMetadata = [])
-    {
-        $this->defaultMetadata = $defaultMetadata;
-        
-        return $this;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function setDefaultTags(array $defaultTags = [])
-    {
-        $this->defaultTags = $defaultTags;
-        
-        return $this;
     }
 }

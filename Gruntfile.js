@@ -155,7 +155,7 @@ module.exports = function(grunt) {
                         command += '--stop-on-failure ';
                         command += '--verbose ';
                         command += '--debug ';
-                        // command += '--group TagsTreeTest.testFindByTags ';
+                        //command += '--group WebSocketClientMockTest.testFindByTags ';
                         command += 'src/test/php';
 
                         return command;

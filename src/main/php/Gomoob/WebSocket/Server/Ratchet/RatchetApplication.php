@@ -11,7 +11,8 @@ namespace Gomoob\WebSocket\Server\Ratchet;
 use Gomoob\WebSocket\Request\WebSocketRequest;
 
 use Gomoob\WebSocket\Server\QueryStringTagsParser;
-use Gomoob\WebSocket\Server\TagsTree;
+
+use Gomoob\WebSocket\Util\TagsTree;
 
 use Monolog\Logger;
 
@@ -51,7 +52,7 @@ class RatchetApplication implements MessageComponentInterface
     /**
      * A structure which maps `{tagName,tagValue}` to associated Ratchet connections.
      *
-     * @var \Gomoob\WebSocket\TagsTree
+     * @var \Gomoob\WebSocket\Util\TagsTree
      */
     protected $tagsTree = null;
 

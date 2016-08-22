@@ -336,6 +336,12 @@ To help you start quickly we also provide a Docker container here https://hub.do
 
 ## Release history
 
+### 1.2.0 (2016-08-23)
+ * Moves the `TagsTree` class to `\Gomoob\WebSocket\Util\TagsTree` ; 
+ * Add a new `TagsTree->reset()` method ; 
+ * Add a new `\Gomoob\WebSocket\Client\WebSocketClientMock` class to easier unit testing ;
+ * Update composer dependencies.
+
 ### 1.1.0 (2016-08-18)
  * Add more PHP Documentor documentation about the goals of `metadata` in 
    the `\Gomoob\WebSocket\IWebSocketRequest` interface and the 

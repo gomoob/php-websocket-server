@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2016, GOMOOB SARL (http://gomoob.com)
  * @license   http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE.md file)
  */
-namespace Gomoob\WebSocket\Server;
+namespace Gomoob\WebSocket\Util;
 
 /**
  * Data structure used to map `{tagName,tagValue}` to general PHP objects, this is like an in memory database.
@@ -166,6 +166,19 @@ class TagsTree
         }
         
         return $objects;
+    }
+    
+    /**
+     * Resets the tags tree.
+     */
+    public function reset()
+    {
+        unset($this->objectsToTagsMap);
+        unset($this->tagsObjectsMap);
+    
+        $this->objects = new \SplObjectStorage();
+        $this->objectsToTagsMap = [];
+        $this->tagsObjectsMap = [];
     }
 
     /**
