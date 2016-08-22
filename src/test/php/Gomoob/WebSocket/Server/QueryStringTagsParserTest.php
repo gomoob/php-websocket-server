@@ -16,11 +16,14 @@ use PHPUnit\Framework\TestCase;
  * Test case for the `QueryStringTagsParser` class.
  *
  * @author Baptiste Gaillard (baptiste.gaillard@gomoob.com)
+ * @group QueryStringTagsParserTest
  */
 class QueryStringTagsParserTest extends TestCase
 {
     /**
      * Test method for `parser(QueryString $queryString)`.
+     *
+     * @group QueryStringTagsParserTest.testParse
      */
     public function testParse()
     {

@@ -24,6 +24,13 @@ use Ratchet\WebSocket\WsServer;
 class WebSocketServer implements IWebSocketServer
 {
     /**
+     * The options used to create the WebSocket server.
+     *
+     * @var array
+     */
+    protected $options;
+    
+    /**
      * The Ratchet application to use.
      *
      * @var \Gomoob\WebSocket\Server\RatchetApplication
@@ -84,14 +91,10 @@ class WebSocketServer implements IWebSocketServer
         // Initialize the Ratchet application
         $this->ratchetApplication = new RatchetApplication($options);
         
-        // Initialize the Ratchet server
-        $this->ratchetServer = IoServer::factory(
-            new HttpServer(
-                new WsServer($this->ratchetApplication)
-            ),
-            array_key_exists('port', $options) ? $options['port'] : 80,
-            array_key_exists('address', $options) ? $options['address'] : '0.0.0.0'
-        );
+        // Sets the options
+        $this->options = $options;
+        $this->options['port'] = array_key_exists('port', $options) ? $options['port'] : 80;
+        $this->options['address'] = array_key_exists('address', $options) ? $options['address'] : '0.0.0.0';
     }
     
     /**
@@ -99,6 +102,16 @@ class WebSocketServer implements IWebSocketServer
      */
     public function run()
     {
+        // Initialize the Ratchet server
+        $this->ratchetServer = IoServer::factory(
+            new HttpServer(
+                new WsServer($this->ratchetApplication)
+            ),
+            $this->options['port'],
+            $this->options['address']
+        );
+
+        // Runs the server
         $this->ratchetServer->run();
     }
 }
