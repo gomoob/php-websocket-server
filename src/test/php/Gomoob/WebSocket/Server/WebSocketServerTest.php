@@ -10,8 +10,6 @@ namespace Gomoob\WebSocket\Server;
 
 use PHPUnit\Framework\TestCase;
 
-use Ratchet\Server\IoServer;
-
 /**
  * Test case for the `WebSocketServer` class.
  *
