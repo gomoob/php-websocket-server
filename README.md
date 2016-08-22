@@ -84,7 +84,7 @@ $response = $phpClient->send(
 );
 ```
 
-If you want to write solid unit test we also provide the `\Gomoob\WebSocket\Client\WebSocketClientMock` 
+If you want to write solid unit tests we also provide the `\Gomoob\WebSocket\Client\WebSocketClientMock` 
 class. This class is a utility mock which is very easy to use.
 
 ```php
@@ -97,10 +97,10 @@ $phpClient->send(WebSocketRequest::create('Message 2.')->setTags(['tag0' => 'tag
 // Then we write a test case by replacing the real WebSocket client implementation with the mock one
 class SampleTestCase extends TestCase
 {
-     public function setUp() {
+    public function setUp() {
         $this->webSocketClient = new WebSocketClientMock();
         $this->myPowerfulService->setWebSocketClient($this->webSocketClient);
-     }
+    }
 
     public function testServiceMethod() {
     
@@ -109,10 +109,10 @@ class SampleTestCase extends TestCase
     
         // Checks the right requests were sent
         $webSocketRequests = $this->webSocketClient->findByTags(['tag0' => 'tag0Value']);
-		  $this->assertCount(2, $webSocketRequests);
-		  $this->assertContains($webSocketRequest0, $webSocketRequests);
-		  $this->assertNotContains($webSocketRequest1, $webSocketRequests);
-		  $this->assertContains($webSocketRequest2, $webSocketRequests);
+		$this->assertCount(2, $webSocketRequests);
+		$this->assertContains($webSocketRequest0, $webSocketRequests);
+		$this->assertNotContains($webSocketRequest1, $webSocketRequests);
+		$this->assertContains($webSocketRequest2, $webSocketRequests);
     }
 }
 ```
