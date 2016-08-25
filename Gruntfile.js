@@ -131,14 +131,7 @@ module.exports = function(grunt) {
                 
                 phpunit : {
                     command : (function() {
-                        
-                        // FIXME: Il semble que ceci ne fonctionne pas (sur le serveur d'intégration continue) sans 
-                        //        doute à cause de Go AOP qui doit ré-écrire les classes de PHPUnit. Du coup pour le 
-                        //        moment il est nécessaire d'installer PHPUnit et de le rendre disponible au niveau du 
-                        //        système.
-                        // var command = 'php ';
-                        // command += 'vendor/phpunit/phpunit/phpunit ';
-                        var command = 'phpunit ';
+                        var command = 'php vendor/phpunit/phpunit/phpunit ';
                         
                         // If the 'ci' option is configured we read the 'phpunit.xml' file. The 'ci' option is dedicated 
                         // to unit testing on the continuous integration server, it enables several reports generation.
